@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <!-- Inclusion des Google Fonts + le framework CSS Materialize.css -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.css">
+    
+    <!-- Style de l'application -->
+    <!--<link rel="stylesheet" href="styles/main.css">-->
+    
+    <title>Vue.js Sample Project</title>
+</head>
+<body>
+
+<main id="app" class="container">
+    
+    <h3>Ajouter une tâche</h3>
+
+    <fieldset>
+        <form class="row" onsubmit="return false">
+            <div class="input-field col m6 offset-m3">
+                <input v-model="newTodoText" id="taskTitle" type="text">
+                <label for="taskTitle">Intitulé de la tâche</label>
+            </div>
+            <div class="col m4 offset-m5">
+                <button type="submit" v-on:click="addNewTodo" class="waves-effect waves-light btn">Ajouter</button>
+            </div>
+        </form>
+    </fieldset>
+
+    <h3>Liste des tâches</h3>
+
+    <p>Il reste <strong>1 tâche</strong> sur <strong>2</strong> à effectuer.</p>
+    
+    <ul id="example-1" class="collection">
+        <li class="collection-item" v-on:remove="items.splice(index, 1)" v-for="(item, index) in items">
+            <input type="checkbox" :id="'t_'+index">
+            <label :for="'t_' + index">Tâche n°{{ index }} - {{ item.message }}</label>
+            <a href="#" class="link-delete" title="Supprimer cette tâche">
+                <i v-on:click="items.splice(index, 1)" class="small material-icons">delete_forever</i>
+            </a>
+        </li>
+    </ul>
+
+</main><!-- Fin de l'app Vue.js -->
+
+<!-- Inclusion des scripts nécessaires au fonctionnement de Materialize (ceci inclus jQuery) -->
+<script src="node_modules/jquery/dist/jquery.js"></script>
+<script src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
+
+<script src="node_modules/vue/dist/vue.js"></script>
+<!--<script src="scripts/main.js"></script>-->
+<script type="text/javascript">
+
+  var example1 = new Vue({
+  el: '#app',
+  data: {
+    newTodoText: '',
+    items: [
+      { message: 'Foo'},
+      { message: 'Bar'}
+    ]
+  },
+  methods: {
+    addNewTodo: function(){
+      console.log(this.newTodoText);
+      this.items.push({
+        message: this.newTodoText
+      });
+      this.newTodoText = '';
+    }
+  }
+});
+</script>
+
+</body>
+</html>
